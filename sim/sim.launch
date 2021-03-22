@@ -1,0 +1,5 @@
+<launch>
+  <node name="rqt_console" pkg="rqt_console" type="rqt_console"/>
+  <node name="rviz" pkg="rviz" type="rviz"/>
+  <node name="interactive_marker" pkg="sim" type="interactive_server.py"/>
+</launch>
