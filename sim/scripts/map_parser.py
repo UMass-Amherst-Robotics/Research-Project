@@ -21,29 +21,25 @@ def main():
 
   # Get command line argument
   filename = rospy.get_param("~filename")
-  print(filename)
 
   # Read in the file. Check if it exists first.
   map_data_raw = []
   map_markers = MarkerArray()
-  print(map_markers)
   if not isfile(filename):
     sys.stderr.write("File \"{}\" does not exist.\n".format(filename))
   else:
     # Wait for subscribers
-    while pub.get_num_connections() < 1:
+    while not rospy.is_shutdown() and pub.get_num_connections() < 1:
       check_rate.sleep()
 
     # The "with ... as ..." syntax will automatically close the file once we've read it
     with open(filename, "r") as f:
       map_data_raw = f.readlines()
-    print(map_data_raw)
 
     for i in range(len(map_data_raw)):
       component_strings = map_data_raw[i].split("--")
       # Convert the seperate tuple strings to tuples and put them in a list
       components = list(map(eval, component_strings))
-      print(components)
 
       # Compute the midpoint and the distance between the endpoints. Also compute the vector that
       # connects the two endpoints
@@ -60,8 +56,6 @@ def main():
       except ZeroDivisionError:
         # Recall, the lim as t approaches infinity of arctan(t) is pi/2
         yaw = pi / 2
-      print("Distance: {}\nMidpoint: {}\nConnecting vector: {}\nAngle: {}".format(\
-      dist,midpoint,connecting_vector,yaw))
 
       # Create the marker object
       marker = Marker()
@@ -95,7 +89,6 @@ def main():
       rospy.logdebug(marker)
       map_markers.markers.append(marker)
 
-    print(map_markers)
     pub.publish(map_markers)
 
 

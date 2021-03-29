@@ -164,7 +164,7 @@ include_directories(
 catkin_install_python(PROGRAMS
   scripts/interactive_server.py
   scripts/map_parser.py
-  scripts/key_teleop.py
+  scripts/robot_markers.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

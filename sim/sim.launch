@@ -1,5 +1,8 @@
 <launch>
+  <param name="map_parser/filename" type="str" value="$(find sim)/map.txt"/>
   <node name="rqt_console" pkg="rqt_console" type="rqt_console"/>
   <node name="rviz" pkg="rviz" type="rviz"/>
-  <node name="interactive_marker" pkg="sim" type="interactive_server.py"/>
+  <node name="map_parser" pkg="sim" type="map_parser.py"/>
+  <node name="robot_marker" pkg="sim" type="robot_markers.py"/>
+  <node name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen"/>
 </launch>
